@@ -45,6 +45,8 @@
             поПсевдонимуToolStripMenuItem = new ToolStripMenuItem();
             винрейтToolStripMenuItem = new ToolStripMenuItem();
             потерянноеВремяToolStripMenuItem = new ToolStripMenuItem();
+            ирокаToolStripMenuItem = new ToolStripMenuItem();
+            командыToolStripMenuItem1 = new ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             menuStrip1.SuspendLayout();
             SuspendLayout();
@@ -86,6 +88,7 @@
             // 
             // EditToolStripMenuItem
             // 
+            EditToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { ирокаToolStripMenuItem, командыToolStripMenuItem1 });
             EditToolStripMenuItem.Name = "EditToolStripMenuItem";
             EditToolStripMenuItem.Size = new Size(99, 20);
             EditToolStripMenuItem.Text = "Редактировать";
@@ -100,15 +103,15 @@
             // игрокToolStripMenuItem
             // 
             игрокToolStripMenuItem.Name = "игрокToolStripMenuItem";
-            игрокToolStripMenuItem.Size = new Size(122, 22);
-            игрокToolStripMenuItem.Text = "Игрок";
+            игрокToolStripMenuItem.Size = new Size(180, 22);
+            игрокToolStripMenuItem.Text = "Игрока";
             игрокToolStripMenuItem.Click += игрокToolStripMenuItem_Click;
             // 
             // командаToolStripMenuItem
             // 
             командаToolStripMenuItem.Name = "командаToolStripMenuItem";
-            командаToolStripMenuItem.Size = new Size(122, 22);
-            командаToolStripMenuItem.Text = "Команда";
+            командаToolStripMenuItem.Size = new Size(180, 22);
+            командаToolStripMenuItem.Text = "Команду";
             командаToolStripMenuItem.Click += командаToolStripMenuItem_Click;
             // 
             // функцииToolStripMenuItem
@@ -122,20 +125,20 @@
             // 
             поискToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { командыToolStripMenuItem, игрокаToolStripMenuItem });
             поискToolStripMenuItem.Name = "поискToolStripMenuItem";
-            поискToolStripMenuItem.Size = new Size(178, 22);
+            поискToolStripMenuItem.Size = new Size(180, 22);
             поискToolStripMenuItem.Text = "Поиск";
             // 
             // командыToolStripMenuItem
             // 
             командыToolStripMenuItem.Name = "командыToolStripMenuItem";
-            командыToolStripMenuItem.Size = new Size(125, 22);
+            командыToolStripMenuItem.Size = new Size(180, 22);
             командыToolStripMenuItem.Text = "Команды";
             командыToolStripMenuItem.Click += командыToolStripMenuItem_Click;
             // 
             // игрокаToolStripMenuItem
             // 
             игрокаToolStripMenuItem.Name = "игрокаToolStripMenuItem";
-            игрокаToolStripMenuItem.Size = new Size(125, 22);
+            игрокаToolStripMenuItem.Size = new Size(180, 22);
             игрокаToolStripMenuItem.Text = "Игрока";
             игрокаToolStripMenuItem.Click += игрокаToolStripMenuItem_Click;
             // 
@@ -143,35 +146,48 @@
             // 
             сортировкаToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { поФамильныйToolStripMenuItem, поПсевдонимуToolStripMenuItem });
             сортировкаToolStripMenuItem.Name = "сортировкаToolStripMenuItem";
-            сортировкаToolStripMenuItem.Size = new Size(178, 22);
+            сортировкаToolStripMenuItem.Size = new Size(180, 22);
             сортировкаToolStripMenuItem.Text = "Сортировка";
             // 
             // поФамильныйToolStripMenuItem
             // 
             поФамильныйToolStripMenuItem.Name = "поФамильныйToolStripMenuItem";
-            поФамильныйToolStripMenuItem.Size = new Size(160, 22);
+            поФамильныйToolStripMenuItem.Size = new Size(180, 22);
             поФамильныйToolStripMenuItem.Text = "По фамилии";
             поФамильныйToolStripMenuItem.Click += поФамильныйToolStripMenuItem_Click;
             // 
             // поПсевдонимуToolStripMenuItem
             // 
             поПсевдонимуToolStripMenuItem.Name = "поПсевдонимуToolStripMenuItem";
-            поПсевдонимуToolStripMenuItem.Size = new Size(160, 22);
+            поПсевдонимуToolStripMenuItem.Size = new Size(180, 22);
             поПсевдонимуToolStripMenuItem.Text = "По псевдониму";
             поПсевдонимуToolStripMenuItem.Click += поПсевдонимуToolStripMenuItem_Click;
             // 
             // винрейтToolStripMenuItem
             // 
             винрейтToolStripMenuItem.Name = "винрейтToolStripMenuItem";
-            винрейтToolStripMenuItem.Size = new Size(178, 22);
+            винрейтToolStripMenuItem.Size = new Size(180, 22);
             винрейтToolStripMenuItem.Text = "Винрейт";
             винрейтToolStripMenuItem.Click += винрейтToolStripMenuItem_Click;
             // 
             // потерянноеВремяToolStripMenuItem
             // 
             потерянноеВремяToolStripMenuItem.Name = "потерянноеВремяToolStripMenuItem";
-            потерянноеВремяToolStripMenuItem.Size = new Size(178, 22);
+            потерянноеВремяToolStripMenuItem.Size = new Size(180, 22);
             потерянноеВремяToolStripMenuItem.Text = "Потерянное время";
+            потерянноеВремяToolStripMenuItem.Click += потерянноеВремяToolStripMenuItem_Click;
+            // 
+            // ирокаToolStripMenuItem
+            // 
+            ирокаToolStripMenuItem.Name = "ирокаToolStripMenuItem";
+            ирокаToolStripMenuItem.Size = new Size(180, 22);
+            ирокаToolStripMenuItem.Text = "Ирока";
+            // 
+            // командыToolStripMenuItem1
+            // 
+            командыToolStripMenuItem1.Name = "командыToolStripMenuItem1";
+            командыToolStripMenuItem1.Size = new Size(180, 22);
+            командыToolStripMenuItem1.Text = "Команды";
             // 
             // Form1
             // 
@@ -216,5 +232,7 @@
         private ToolStripMenuItem поПсевдонимуToolStripMenuItem;
         private ToolStripMenuItem винрейтToolStripMenuItem;
         private ToolStripMenuItem потерянноеВремяToolStripMenuItem;
+        private ToolStripMenuItem ирокаToolStripMenuItem;
+        private ToolStripMenuItem командыToolStripMenuItem1;
     }
 }

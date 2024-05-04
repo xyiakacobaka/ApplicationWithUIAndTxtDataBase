@@ -119,17 +119,14 @@ namespace InternationalTeamsUI.Иерархия
         }
         private double result;
         public double WinRate(double WinGame, double LoseGame)//Метод по вычислению коэфициента побед
-        {
+        {            
             result = WinGame / (WinGame+LoseGame);
             return Math.Round(result, 3);
         }
-        public double LoseRate()//Метод по вычислению коэфициента поражений
+        public double DotaLife(double HoursInDota, double Age)//Процент жизни, который потратил игрок на Доту
         {
-            return LoseGames / (WinGames + LoseGames) * 100;
-        }
-        public double DotaLife()//Процент жизни, который потратил игрок на Доту
-        {
-            return HoursInDota / (Age * 365) * 100;
+            result = HoursInDota / (Age * 365 *24);
+            return Math.Round(result,2);
         }
         public string ToString()
         {

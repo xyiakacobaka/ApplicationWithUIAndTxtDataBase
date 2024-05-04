@@ -18,7 +18,7 @@ namespace InternationalTeamsUI
         static public List<string> ListNickNames = new List<string>();
         static public List<Trainer> ListTrainers = new List<Trainer>();
         static public List<string> ListTrainersName = new List<string>();
-        static public List<string> Ranks = ["Рекрут", "Страж", "Рыцарь", "Герой", "Легенда", "Властелин", "Божество"];        
+        static public List<string> Ranks = ["Рекрут", "Страж", "Рыцарь", "Герой", "Легенда", "Властелин", "Божество"];
         /****************************************************************************/
         /******************************Статические поля******************************/
         /****************************************************************************/
@@ -74,7 +74,7 @@ namespace InternationalTeamsUI
         {
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             DGVProperties();
-            
+
         }
         /****************************************************************************/
         /*****************************Проверки базы данных***************************/
@@ -254,7 +254,9 @@ namespace InternationalTeamsUI
             }
             dataGridView1.DataSource = ListPlayers.GetRange(0, ListPlayers.Count);
         }
-
+        /*******************************************************************************/
+        /*************Вызов формы для выполнения метода подсчета винрейта игрока********/
+        /***********************игрок выбирается в открывшейся форме********************/
         private void винрейтToolStripMenuItem_Click(object sender, EventArgs e)
         {
             playerSearch.ShowDialog();
@@ -262,22 +264,29 @@ namespace InternationalTeamsUI
             {
                 if (player.NickName == SerchNickName)
                 {
-                    string[] WinRates = new string[2] { player.NickName, player.WinRate(player.WinGames, player.LoseGames).ToString()};
+                    string[] WinRates = new string[2] { player.NickName, player.WinRate(player.WinGames, player.LoseGames).ToString() };
                     string Result = string.Format("У игрока с псевдонимом {0}, винрейт составляет: {1}", WinRates[0], WinRates[1]);
                     MessageBox.Show(Result, "Результат", MessageBoxButtons.OK);
                     break;
                 }
-            }            
+            }
         }
-
-        private void label1_Click(object sender, EventArgs e)
+        /*******************************************************************************/
+        /*************Вызов формы для подсчета  метода подсчета винрейта игрока*********/
+        /***********************игрок выбирается в открывшейся форме********************/
+        private void потерянноеВремяToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
+            playerSearch.ShowDialog();
+            foreach (Player player in ListPlayers)
+            {
+                if (player.NickName == SerchNickName)
+                {
+                    string[] Hours = new string[2] { player.NickName, player.DotaLife(player.HoursInDota,player.Age).ToString() };
+                    string Result = string.Format("Игрок с псевдонимом {0}\nпотратил на игру: {1} часов своей жизни", Hours[0], Hours[1]);
+                    MessageBox.Show(Result, "Результат", MessageBoxButtons.OK);
+                    break;
+                }
+            }
         }
     }
 }
