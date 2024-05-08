@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace InternationalTeamsUI
+namespace InternationalTeamsUI.Формы
 {
     public partial class PlayerAdd : Form
     {
@@ -283,16 +283,16 @@ namespace InternationalTeamsUI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (textBox1.Text == string.Empty || textBox2.Text == string.Empty || textBox3.Text == string.Empty || textBox4.Text == string.Empty 
+            if (textBox1.Text == string.Empty || textBox2.Text == string.Empty || textBox3.Text == string.Empty || textBox4.Text == string.Empty
                 || textBox5.Text == string.Empty || textBox6.Text == string.Empty || textBox7.Text == string.Empty || comboBox1.Text == string.Empty
                 || comboBox2.Text == string.Empty)
                 throw new ApplicationException("Проверьте введенные поля");
-            new Player(textBox1.Text, textBox2.Text, Int32.Parse(textBox3.Text), textBox4.Text, comboBox1.Text, Int32.Parse(textBox5.Text), 
-                Int32.Parse(textBox6.Text), Int32.Parse(textBox7.Text), comboBox2.Text);
+            new Player(textBox1.Text, textBox2.Text, int.Parse(textBox3.Text), textBox4.Text, comboBox1.Text, int.Parse(textBox5.Text),
+                int.Parse(textBox6.Text), int.Parse(textBox7.Text), comboBox2.Text);
             form1 = Application.OpenForms[0];
             form1.Show();
-            this.Close();
-            
+            Close();
+
         }
     }
 }
