@@ -33,19 +33,14 @@ namespace InternationalTeamsUI
             dataGridView1.Columns["Name"].HeaderText = "Название";
             dataGridView1.Columns["Count"].HeaderText = "Количество выигранных турниров";
             dataGridView1.Columns["Trainer"].HeaderText = "Тренер";
-        }
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-        
+        }        
         private void button1_Click(object sender, EventArgs e)
         {
-            if (textBox1.Text == string.Empty || textBox2.Text == string.Empty || textBox3.Text == string.Empty)
+            if (textBox1.Text == string.Empty || textBox2.Text == string.Empty || comboBox1.Text == string.Empty)
                 throw new ApplicationException("Проверьте введенные поля");
             form1 = Application.OpenForms[0];
             form1.Show();
-            new Team(textBox1.Text, Int32.Parse(textBox2.Text),textBox3.Text);
+            new Team(textBox1.Text, Int32.Parse(textBox2.Text),comboBox1.Text);
             this.Close();
         }
 
@@ -53,6 +48,7 @@ namespace InternationalTeamsUI
         {
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.DataSource = Form1.ListTeams.GetRange(0, Form1.ListTeams.Count);
+            comboBox1.DataSource = Form1.ListTrainersLastName.GetRange(0, Form1.ListTrainersLastName.Count);
             DGVProperties();
         }
     }

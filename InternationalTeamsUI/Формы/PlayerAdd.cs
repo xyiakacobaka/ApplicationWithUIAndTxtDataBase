@@ -119,7 +119,6 @@ namespace InternationalTeamsUI.Формы
             label7.Size = new Size(81, 17);
             label7.TabIndex = 29;
             label7.Text = "Поражений:";
-            label7.Click += label7_Click;
             // 
             // label8
             // 
@@ -216,7 +215,6 @@ namespace InternationalTeamsUI.Формы
             comboBox2.Name = "comboBox2";
             comboBox2.Size = new Size(189, 25);
             comboBox2.TabIndex = 32;
-            comboBox2.SelectedIndexChanged += comboBox2_SelectedIndexChanged;
             // 
             // PlayerAdd
             // 
@@ -261,20 +259,10 @@ namespace InternationalTeamsUI.Формы
         private ComboBox comboBox1;
         private TextBox textBox5;
         private TextBox textBox6;
-
-        private void label7_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private TextBox textBox7;
         private ComboBox comboBox2;
+
         Form form1;
-        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void PlayerAdd_Load(object sender, EventArgs e)
         {
             comboBox1.DataSource = Form1.Ranks.GetRange(0, Form1.Ranks.Count);
@@ -283,16 +271,22 @@ namespace InternationalTeamsUI.Формы
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (textBox1.Text == string.Empty || textBox2.Text == string.Empty || textBox3.Text == string.Empty || textBox4.Text == string.Empty
-                || textBox5.Text == string.Empty || textBox6.Text == string.Empty || textBox7.Text == string.Empty || comboBox1.Text == string.Empty
-                || comboBox2.Text == string.Empty)
-                throw new ApplicationException("Проверьте введенные поля");
-            new Player(textBox1.Text, textBox2.Text, int.Parse(textBox3.Text), textBox4.Text, comboBox1.Text, int.Parse(textBox5.Text),
-                int.Parse(textBox6.Text), int.Parse(textBox7.Text), comboBox2.Text);
-            form1 = Application.OpenForms[0];
-            form1.Show();
-            Close();
-
+            try
+            {
+                if (textBox1.Text == string.Empty || textBox2.Text == string.Empty || textBox3.Text == string.Empty || textBox4.Text == string.Empty
+                    || textBox5.Text == string.Empty || textBox6.Text == string.Empty || textBox7.Text == string.Empty || comboBox1.Text == string.Empty
+                    || comboBox2.Text == string.Empty)
+                    throw new ApplicationException("Проверьте введенные поля");
+                new Player(textBox1.Text, textBox2.Text, int.Parse(textBox3.Text), textBox4.Text, comboBox1.Text, int.Parse(textBox5.Text),
+                    int.Parse(textBox6.Text), int.Parse(textBox7.Text), comboBox2.Text);
+                form1 = Application.OpenForms[0];
+                form1.Show();
+                Close();
+            }
+            catch(FormatException) 
+            {
+                throw new FormatException("Не правильный формат данных. Проверьте поля.");
+            }
         }
     }
 }

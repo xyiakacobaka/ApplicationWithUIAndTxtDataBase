@@ -28,7 +28,8 @@
         }
         private string trainer;
         public string Trainer { get { return trainer; } 
-            set {
+            set 
+            {
                 if (Trainer == string.Empty)
                     throw new ApplicationException("Проверьте введенные данные");
                 trainer = value;

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace InternationalTeamsUI.Иерархия
 {
     public class Trainer : Person
-    {
+    {        
         private int experince;
         public int Experince
         {
@@ -19,39 +19,31 @@ namespace InternationalTeamsUI.Иерархия
                 experince = value;
             }
         }
-        private int count;
-        public int Count//Количество команд, которые он тренировал
-        {
-            get { return count; }
-            set
-            {
-                if (value >= 0)
-                    count = value;
-                else
-                    throw new ApplicationException("Проверьте введенные данные");
-            }
-        }
         private int salary;
-        public int Salary//Количество команд, которые он тренировал
+        public int Salary { get { return salary; } 
+            set 
+            {                
+                salary = value;                
+            } }
+        public Trainer(string LastName, string Name, int Age, int Experince, int Salary)
         {
-            get { return salary; }
-            set
-            {
-                if (value >= 0)
-                    salary = value;
-                else
-                    throw new ApplicationException("Проверьте введенные данные");
-            }
+            this.LastName = LastName;
+            this.Name = Name;
+            this.Age = Age;
+            this.Experince = Experince;
+            this.Salary = Salary;
+            Form1.ListTrainers.Add(this);
+            Form1.ListTrainersLastName.Add(this.LastName);
+            Form1.ListPersons.Add(this);
+            Form1.ListLastNamePersons.Add(this.LastName);
         }
-        public Trainer()
+        public string ToString()
         {
-            experince = 0;
-            count = 0;
+            return this.LastName + ";" + this.Name + ";" + this.Age + ";" + this.Experince + ";" + this.Salary;
         }
-        public Trainer(int experince, int count)
+        public override void Status()
         {
-            Experince = experince;
-            Count = count;
+            MessageBox.Show("Статус персоны: Тренер");
         }
     }
 }

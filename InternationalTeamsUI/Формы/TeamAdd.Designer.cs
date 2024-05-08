@@ -37,7 +37,7 @@
             button1 = new Button();
             dataGridView1 = new DataGridView();
             label5 = new Label();
-            textBox3 = new TextBox();
+            comboBox1 = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -57,7 +57,6 @@
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(189, 26);
             textBox1.TabIndex = 1;
-            textBox1.TextChanged += textBox1_TextChanged;
             // 
             // label2
             // 
@@ -128,19 +127,20 @@
             label5.TabIndex = 8;
             label5.Text = "Тренер:";
             // 
-            // textBox3
+            // comboBox1
             // 
-            textBox3.Location = new Point(113, 139);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(189, 26);
-            textBox3.TabIndex = 9;
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Location = new Point(113, 139);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(189, 27);
+            comboBox1.TabIndex = 9;
             // 
             // TeamAdd
             // 
             AutoScaleDimensions = new SizeF(9F, 19F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(464, 328);
-            Controls.Add(textBox3);
+            Controls.Add(comboBox1);
             Controls.Add(label5);
             Controls.Add(dataGridView1);
             Controls.Add(button1);
@@ -177,6 +177,6 @@
         private Button button1;
         private DataGridView dataGridView1;
         private Label label5;
-        private TextBox textBox3;
+        private ComboBox comboBox1;
     }
 }

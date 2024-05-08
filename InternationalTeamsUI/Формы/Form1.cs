@@ -8,33 +8,28 @@ namespace InternationalTeamsUI
 {
     public partial class Form1 : Form
     {
-        /****************************************************************************/
         /*********************************Коллекции**********************************/
-        /****************************************************************************/
         static public List<Team> ListTeams = new List<Team>();
         static public List<string> ListNameTeams = new List<string>();
         static public List<Player> ListPlayers = new List<Player>();
-        static public List<string> ListPlayersLastName = new List<string>();
-        private List<Player> FindedPlayers = new List<Player>();
         static public List<string> ListNickNames = new List<string>();
         static public List<Trainer> ListTrainers = new List<Trainer>();
-        static public List<string> ListTrainersName = new List<string>();
+        static public List<string> ListTrainersLastName = new List<string>();
+        static public List<Person> ListPersons = new List<Person>();
+        static public List<string> ListLastNamePersons = new List<string>();
         static public List<string> Ranks = ["Рекрут", "Страж", "Рыцарь", "Герой", "Легенда", "Властелин", "Божество"];
-        /****************************************************************************/
         /******************************Статические поля******************************/
-        /****************************************************************************/
         static public string SerchNickName;
         static public string SerchTeam;
-        /****************************************************************************/
+        private List<Player> FindedPlayers = new List<Player>();
         /************************************Формы***********************************/
-        /****************************************************************************/
         TeamAdd teamAdd = new TeamAdd();
         PlayerAdd playerAdd = new PlayerAdd();
         PlayerSearch playerSearch = new PlayerSearch();
         TeamSearch teamSearch = new TeamSearch();
-        /****************************************************************************/
+        PersonsStatus personStatus = new PersonsStatus();
+        TrainerAdd trainerAdd = new TrainerAdd();
         /*********************************Сортировки*********************************/
-        /****************************************************************************/
         PlayerLastNameComparer playerLastNameComparer = new PlayerLastNameComparer();
         PlayerNickNameComparer playerNickNameComparer = new PlayerNickNameComparer();
         private bool FamilySwitcher = false;
@@ -43,9 +38,7 @@ namespace InternationalTeamsUI
         {
             InitializeComponent();
         }
-        /****************************************************************************/
         /***********************Настройка DataGridView*******************************/
-        /****************************************************************************/
         private void DGVProperties()
         {
             dataGridView1.DataSource = ListPlayers.GetRange(0, ListPlayers.Count);
@@ -58,9 +51,7 @@ namespace InternationalTeamsUI
             dataGridView1.Columns["LoseGames"].DisplayIndex = 6;
             dataGridView1.Columns["HoursInDota"].DisplayIndex = 7;
             dataGridView1.Columns["Team"].DisplayIndex = 8;
-            /****************************************************************/
             /*********************Изменение имени столбца********************/
-            /****************************************************************/
             dataGridView1.Columns["LastName"].HeaderText = "Фамилия";
             dataGridView1.Columns["Name"].HeaderText = "Имя";
             dataGridView1.Columns["Age"].HeaderText = "Возраст";
@@ -77,9 +68,7 @@ namespace InternationalTeamsUI
             DGVProperties();
 
         }
-        /****************************************************************************/
         /*****************************Проверки базы данных***************************/
-        /****************************************************************************/
         private bool PlCheck(string str)
         {
             foreach (Player player in ListPlayers)
@@ -102,16 +91,12 @@ namespace InternationalTeamsUI
             }
             return true;
         }
-        /******************************************************************************/
         /***********************Создание двух текстовых документа**********************/
-        /******************************************************************************/
         private void CreateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (ListPlayers.Count != 0)
             {
-                /****************************************************************/
                 /*************************Запись в Teams.txt*********************/
-                /****************************************************************/
                 StreamWriter writer = new StreamWriter("Teams.txt", false);
                 writer.WriteLine("Название;Имя;Доход;Тренер");
                 foreach (Team item in ListTeams)
@@ -119,9 +104,7 @@ namespace InternationalTeamsUI
                     writer.WriteLine(item.ToString());
                 }
                 writer.Close();
-                /****************************************************************/
                 /*************************Запись в Players.txt*******************/
-                /****************************************************************/
                 writer = new StreamWriter("Players.txt", false);
                 writer.WriteLine("Фамилия;Имя;Возраст;Псевдоним;Ранг;Побед;Поражений;Часов в доте;Команда");
                 foreach (Player item in ListPlayers)
@@ -129,17 +112,21 @@ namespace InternationalTeamsUI
                     writer.WriteLine(item.ToString());
                 }
                 writer.Close();
+                /*************************Запись в Trainers.txt******************/
+                writer = new StreamWriter("Trainers.txt", false);
+                writer.WriteLine("Фамилия;Имя;Возраст;Стаж;Оклад");
+                foreach (Trainer item in ListTrainers)
+                {
+                    writer.WriteLine(item.ToString());
+                }
+                writer.Close();
             }
             else throw new ArgumentException("Невозможно создать пустой файл. Проверьте базу данных");
         }
-        /******************************************************************************/
         /*************************Чтение двух текстовых документа**********************/
-        /******************************************************************************/
         private void ViewToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            /****************************************************************/
             /************************Чтение Teams.txt************************/
-            /****************************************************************/
             StreamReader reader = new StreamReader("Teams.txt");
             bool check = false;
             while (reader.Peek() > 1)
@@ -149,15 +136,13 @@ namespace InternationalTeamsUI
                 {
                     if (TmCheck(strings[0]) && strings.Length == 3)
                     {
-                        Team team = new Team(strings[0], Int32.Parse(strings[1]), strings[2]);
+                        new Team(strings[0], Int32.Parse(strings[1]), strings[2]);
                     }
                 }
                 check = true;
             }
             reader.Close();
-            /****************************************************************/
             /*************************Чтение Players.txt*********************/
-            /****************************************************************/
             reader = new StreamReader("Players.txt");
             dataGridView1.DataSource = null;
             check = false;
@@ -168,7 +153,7 @@ namespace InternationalTeamsUI
                 {
                     if (PlCheck(strings[3]) && strings.Length == 9)
                     {
-                        Player player = new Player(strings[0], strings[1], Int32.Parse(strings[2]),
+                        new Player(strings[0], strings[1], Int32.Parse(strings[2]),
                             strings[3], strings[4], Int32.Parse(strings[5]), Int32.Parse(strings[6]), Int32.Parse(strings[7]), strings[8]);
                     }
                 }
@@ -177,25 +162,38 @@ namespace InternationalTeamsUI
             dataGridView1.DataSource = ListPlayers.GetRange(0, ListPlayers.Count);
             DGVProperties();
             reader.Close();
+            /*************************Чтение Trainers.txt*********************/
+            reader = new StreamReader("Trainers.txt");
+            check = false;
+            while (reader.Peek() > 1)
+            {
+                string[] strings = reader.ReadLine().Split(";");
+                if (check)
+                {
+                    if (PlCheck(strings[3]) && strings.Length == 5)
+                    {
+                        new Trainer(strings[0], strings[1], Int32.Parse(strings[2]),
+                            Int32.Parse(strings[3]), Int32.Parse(strings[4]));
+                    }
+                }
+                check = true;
+            }
+            dataGridView1.DataSource = ListPlayers.GetRange(0, ListPlayers.Count);
+            reader.Close();
+            reader.Close();
         }
-        /****************************************************************-**************/
         /***********************Вызов формы для добавления команды**********************/
-        /*******************************************************************************/
         private void командаToolStripMenuItem_Click(object sender, EventArgs e)
         {
             teamAdd.ShowDialog();
         }
-        /****************************************************************-**************/
         /***********************Вызов формы для добавления игрока***********************/
-        /*******************************************************************************/
         private void игрокToolStripMenuItem_Click(object sender, EventArgs e)
         {
             playerAdd.ShowDialog();
             dataGridView1.DataSource = ListPlayers.GetRange(0, ListPlayers.Count);
         }
-        /****************************************************************-**************/
         /***********************Вызов формы для поиска игроков команды******************/
-        /*******************************************************************************/
         private void командыToolStripMenuItem_Click(object sender, EventArgs e)
         {
             teamSearch.ShowDialog();
@@ -207,9 +205,7 @@ namespace InternationalTeamsUI
             dataGridView1.DataSource = FindedPlayers.GetRange(0, FindedPlayers.Count);
             FindedPlayers.Clear();
         }
-        /****************************************************************-**************/
         /***********************Вызов формы для поиска игрока***************************/
-        /*******************************************************************************/
         private void игрокаToolStripMenuItem_Click(object sender, EventArgs e)
         {
             playerSearch.ShowDialog();
@@ -221,9 +217,7 @@ namespace InternationalTeamsUI
             dataGridView1.DataSource = FindedPlayers.GetRange(0, FindedPlayers.Count);
             FindedPlayers.Clear();
         }
-        /****************************************************************-**************/
         /***********************Вызов формы для сортировки по фамилии*******************/
-        /*******************************************************************************/
         private void поФамильныйToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!FamilySwitcher)
@@ -238,9 +232,7 @@ namespace InternationalTeamsUI
             }
             dataGridView1.DataSource = ListPlayers.GetRange(0, ListPlayers.Count);
         }
-        /****************************************************************-**************/
         /**********************Вызов формы для сортировки по псевдониму*****************/
-        /*******************************************************************************/
         private void поПсевдонимуToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!NickNameSwitcher)
@@ -255,7 +247,6 @@ namespace InternationalTeamsUI
             }
             dataGridView1.DataSource = ListPlayers.GetRange(0, ListPlayers.Count);
         }
-        /*******************************************************************************/
         /*************Вызов формы для выполнения метода подсчета винрейта игрока********/
         /***********************игрок выбирается в открывшейся форме********************/
         private void винрейтToolStripMenuItem_Click(object sender, EventArgs e)
@@ -265,14 +256,11 @@ namespace InternationalTeamsUI
             {
                 if (player.NickName == SerchNickName)
                 {
-                    string[] WinRates = new string[2] { player.NickName, player.WinRate(player.WinGames, player.LoseGames).ToString() };
-                    string Result = string.Format("У игрока с псевдонимом {0}, винрейт составляет: {1}", WinRates[0], WinRates[1]);
-                    MessageBox.Show(Result, "Результат", MessageBoxButtons.OK);
+                    MessageBox.Show($"У игрока с псевдонимом {player.NickName}, винрейт составляет: {player.WinRate(player.WinGames, player.LoseGames)}", "Результат", MessageBoxButtons.OK) ;
                     break;
                 }
             }
         }
-        /*******************************************************************************/
         /*************Вызов формы для подсчета  метода подсчета винрейта игрока*********/
         /***********************игрок выбирается в открывшейся форме********************/
         private void потерянноеВремяToolStripMenuItem_Click(object sender, EventArgs e)
@@ -282,12 +270,19 @@ namespace InternationalTeamsUI
             {
                 if (player.NickName == SerchNickName)
                 {
-                    string[] Hours = new string[2] { player.NickName, player.DotaLife(player.HoursInDota,player.Age).ToString() };
-                    string Result = string.Format("Игрок с псевдонимом {0}\nпотратил на игру: {1} часов своей жизни", Hours[0], Hours[1]);
-                    MessageBox.Show(Result, "Результат", MessageBoxButtons.OK);
+                    MessageBox.Show($"Игрок с псевдонимом {player.NickName}\nпотратил на игру: {player.DotaLife(player.HoursInDota, player.Age)} часов своей жизни", "Результат", MessageBoxButtons.OK);
                     break;
                 }
             }
+        }
+        private void персоныToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            personStatus.ShowDialog();
+        }
+
+        private void тренераToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            trainerAdd.ShowDialog();
         }
     }
 }

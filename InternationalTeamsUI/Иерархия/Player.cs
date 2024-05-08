@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using InternationalTeamsUI;
+using InternationalTeamsUI.Исключения;
 
 namespace InternationalTeamsUI.Иерархия
 {
@@ -19,8 +20,7 @@ namespace InternationalTeamsUI.Иерархия
                     nickName = value;
                 else
                     throw new ApplicationException("Игрок с тем же никнеймом уже добавлен в базу данных. Вы можете его найти");
-            } }
-        
+            } }        
         private string rank;
         public string Rank
         {
@@ -30,17 +30,22 @@ namespace InternationalTeamsUI.Иерархия
                 rank = value;
             }
         }
-
         private int winGames;
         public int WinGames
         {
             get { return winGames; }//Количество выйгранных игры в соревновательной игре 
             set
             {
-                if (value >= 0)
+                try
+                {
+                    if (value < 0)
+                        throw new NegativeValue($"Значение {value} не верно. Поле не может отриательным. Проверьте данные");
                     winGames = value;
-                else
-                    throw new ApplicationException("Проверьте введенные данные");
+                }
+                catch (FormatException)
+                {
+                    throw new FormatException("Проверьте введенные данные");
+                }
             }
         }
         private int loseGames;
@@ -49,10 +54,16 @@ namespace InternationalTeamsUI.Иерархия
             get { return loseGames; }//Количество выйгранных игры в соревновательной игре 
             set
             {
-                if (value >= 0)
-                    loseGames = value;
-                else
-                    throw new ApplicationException("Проверьте введенные данные");
+                try
+                {
+                    if (value < 0)
+                        throw new NegativeValue($"Значение {value} не верно. Поле не может отриательным. Проверьте данные");
+                    loseGames = value;                        
+                }
+                catch(FormatException)
+                {
+                    throw new FormatException("Проверьте введенные данные");
+                }
             }
         }
         private int hoursInDota;
@@ -61,47 +72,39 @@ namespace InternationalTeamsUI.Иерархия
             get { return hoursInDota; }
             set
             {
-                if (value >= 0)
+                try
+                {
+                    if (value < 0)
+                        throw new NegativeValue($"Значение {value} не верно. Поле не может отриательным. Проверьте данные");
                     hoursInDota = value;
-                else
-                    throw new ApplicationException("Проверьте введенные данные");
+                }
+                catch (FormatException)
+                {
+                    throw new FormatException("Проверьте введенные данные");
+                }
             }
         }
         private string team;
         public string Team { get { return team; } 
-            set {
-                if (value == null)
-                    throw new ApplicationException("Проверьте введенные данные");
-                if (Form1.ListNameTeams.IndexOf(value) == -1)                    
-                    throw new ApplicationException("Такого звания не существует. Проверьте правильность ввода названия!");
+            set {                
                 team = value;
-            } }
-
-        public Player()//Пустой конструктор
-        {
-            Name = string.Empty;
-            Age = 0;
-            LastName = string.Empty;
-            Rank = string.Empty;
-            Form1.ListPlayers.Add(this);
-            Form1.ListNickNames.Add(this.NickName);
-            Form1.ListPlayersLastName.Add(this.LastName);
-        }
-        public Player(string LastName, string Name, int Age, string NickName, string Rank, int WinGame, int LoseGame, int HoursInDota, string Team)//Конструтор
+            } }        
+        public Player(string LastName, string Name, int Age, string NickName, string Rank, int WinGames, int LoseGames, int HoursInDota, string Team)//Конструтор
         {
             Check(Team);
+            this.LastName = LastName;
             this.Name = Name;
             this.Age = Age;
-            this.LastName = LastName;
             this.Rank = Rank;
             this.NickName = NickName;
-            this.WinGames = WinGame;
-            this.LoseGames = LoseGame;
+            this.WinGames = WinGames;
+            this.LoseGames = LoseGames;
             this.HoursInDota = HoursInDota;
             this.Team = Team;
             Form1.ListPlayers.Add(this);
             Form1.ListNickNames.Add(this.NickName);
-            Form1.ListPlayersLastName.Add(this.LastName);
+            Form1.ListPersons.Add(this);
+            Form1.ListLastNamePersons.Add(this.LastName);            
         }
         private void Check(string Team)
         {
@@ -132,6 +135,10 @@ namespace InternationalTeamsUI.Иерархия
         {
             return this.LastName + ";" + this.Name + ";" + this.Age + ";" + this.NickName + ";" + this.Rank + ";" + this.WinGames + ";" + 
                 + this.LoseGames + ";" + this.HoursInDota + ";" + this.Team;
+        }
+        public override void Status()
+        {
+            MessageBox.Show("Статус персоны: Игрок");
         }
     }
 }

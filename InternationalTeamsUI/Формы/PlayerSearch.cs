@@ -23,13 +23,11 @@ namespace InternationalTeamsUI
 
         private void PlayerSearch_Load(object sender, EventArgs e)
         {
-            comboBox1.DataSource = Form1.ListNickNames.GetRange(0, Form1.ListPlayersLastName.Count);
+            comboBox1.DataSource = Form1.ListNickNames.GetRange(0, Form1.ListNickNames.Count);
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (comboBox1.Text == string.Empty)
-                throw new ApplicationException("Проверьте введенные поля");
             form1 = Application.OpenForms[0];
             form1.Show();
             Form1.SerchNickName = comboBox1.Text;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InternationalTeamsUI.Исключения;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,21 +7,39 @@ using System.Threading.Tasks;
 
 namespace InternationalTeamsUI.Иерархия
 {
-    public class Person : IComparable<Person>
+    public abstract class Person
     {
-        public string LastName { get; set; }//Фамилия
-        public string Name { get; set; }//Имя
-        public int Age { get; set; }//Возраст
-
-        public int CompareTo(Person? person)
-        {
-            if (LastName[0] > person.LastName[0])
-                return 1;
-            else if (LastName[0] < person.LastName[0])
-                return -1;
-            else
-                return 0;
+        private string lastName;
+        public string LastName { get { return lastName; }//Фамилия
+            set {
+                
+                lastName = value;
+                /*if (value == string.Empty)
+                    throw new ApplicationException("Проверьте введенные данные");
+                if (Form1.ListNickNames.IndexOf(value) == -1)
+                    lastName = value;
+                else
+                    throw new ApplicationException("Игрок с тем же никнеймом уже добавлен в базу данных. Вы можете его найти");*/
+            }
         }
+        private string name;
+        public string Name { get { return name; }//Имя
+            set
+            {
+                name = value;
+                /*if (value == string.Empty)
+                    throw new ApplicationException("Проверьте введенные данные");
+                if (Form1.ListNickNames.IndexOf(value) == -1)
+                    lastName = value;
+                else
+                    throw new ApplicationException("Игрок с тем же никнеймом уже добавлен в базу данных. Вы можете его найти");*/
+            }
+        }
+        private int age;
+        public int Age { get { return age; }//Возраст
+            set {
+                age = value;
+            } }
         public Person()
         {
             LastName = string.Empty;
@@ -33,5 +52,6 @@ namespace InternationalTeamsUI.Иерархия
             this.Name = Name;
             this.Age = Age;
         }
+        public abstract void Status();
     }
 }
